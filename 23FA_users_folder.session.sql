@@ -18,10 +18,7 @@
 
 SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS people;
-DROP TABLE IF EXISTS peopleroles;
-DROP TABLE IF EXISTS roles;
-DROP TABLE IF EXISTS peopleskills;
-DROP TABLE IF EXISTS skills;
+# ... 
 SET FOREIGN_KEY_CHECKS=1;
 
 # Section 2
@@ -31,24 +28,12 @@ SET FOREIGN_KEY_CHECKS=1;
 # time committment offers some sense of how much time was required (or will be required) to gain the skill.
 # You can assign the skill descriptions.  Please be creative!
 
-CREATE TABLE skills (
-    id int NOT NULL,
-    name varchar(255) NOT NULL,
-    description varchar(4096) NOT NULL,
-    tag varchar(255) NOT NULL,
-    url varchar(255) DEFAULT NULL,
-    time_commitment varchar(255) DEFAULT NULL,
-    PRIMARY KEY (id)
-);
 
 # Section 3
 # Populate skills
 # Populates the skills table with eight skills, their tag fields must exactly contain “Skill 1”, “Skill 2”, etc.
 # You can assign skill names.  Please be creative!
 
-INSERT INTO skills (id, name, description, tag, url, time_commitment) VALUES
-(1, 'Skill Name 1', 'Description 1', 'Skill 1', 'http://example.com/1', '30 hours'),
-(2, 'Skill Name 2', 'Description 2', 'Skill 2', 'http://example.com/2', '40 hours'),
 
 # Section 4
 # Create people( id,first_name, last_name, email, linkedin_url, headshot_url, discord_handle, brief_bio, date_joined)
@@ -58,13 +43,6 @@ INSERT INTO skills (id, name, description, tag, url, time_commitment) VALUES
 CREATE TABLE people (
     people_id int,
     people_last_name varchar(256) NOT NULL,
-    people_first_name varchar(255) DEFAULT NULL,
-    people_email varchar(255) DEFAULT NULL,
-    people_linkedin_url varchar(255) DEFAULT NULL,
-    people_headshot_url varchar(255) DEFAULT NULL,
-    people_discord_handle varchar(255) DEFAULT NULL,
-    people_brief_bio varchar(4096) DEFAULT NULL,
-    people_date_joined date NOT NULL,
     PRIMARY KEY (people_id)
 );
 
@@ -73,28 +51,13 @@ CREATE TABLE people (
 # Their last names must exactly be “Person 1”, “Person 2”, etc.
 # Other fields are for you to assign.
 
-insert into people (people_id,people_last_name) values 
-(1,'Person 1'),
-(2,'Person 2'),
-(3,'Person 3'),
-(4,'Person 4'),
-(5,'Person 5'),
-(5,'Person 6');
+insert into people (people_id,people_last_name) values (1,'Person 1');
 
 
 # Section 6
 # Create peopleskills( id, skills_id, people_id, date_acquired )
 # None of the fields can ba NULL. ID can be auto_increment.
 
-CREATE TABLE peopleskills (
-    id int AUTO_INCREMENT,
-    skills_id int NOT NULL,
-    people_id int NOT NULL,
-    date_acquired date NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (skills_id) REFERENCES skills(id),
-    FOREIGN KEY (people_id) REFERENCES people(id)
-);
 
 # Section 7
 # Populate peopleskills such that:
@@ -115,12 +78,6 @@ CREATE TABLE peopleskills (
 # Create roles( id, name, sort_priority )
 # sort_priority is an integer and is used to provide an order for sorting roles
 
-CREATE TABLE roles (
-    id int NOT NULL,
-    name varchar(255) NOT NULL,
-    sort_priority int NOT NULL,
-    PRIMARY KEY (id)
-);
 
 
 # Section 9
@@ -134,15 +91,7 @@ CREATE TABLE roles (
 # Create peopleroles( id, people_id, role_id, date_assigned )
 # None of the fields can be null.  ID can be auto_increment
 
-CREATE TABLE peopleroles (
-    id int AUTO_INCREMENT,
-    people_id int NOT NULL,
-    role_id int NOT NULL,
-    date_assigned date NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (people_id) REFERENCES people(id),
-    FOREIGN KEY (role_id) REFERENCES roles(id)
-);
+
 
 # Section 11
 # Populate peopleroles

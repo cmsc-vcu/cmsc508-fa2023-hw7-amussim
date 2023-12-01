@@ -1,7 +1,7 @@
 ---
 title: Homework 7 - Creating a resume database
-author: (your name goes here!)
-date: last-modified
+author: Aneesh Mussim
+date: 11/30/2023
 format:
     html:
         theme: cosmo
@@ -94,9 +94,96 @@ except Exception as e:
 
 (briefly describe the project and the database)
 
+The project involves creating a comprehensive database for a company that consists of a diverse group of designers and developers, all under the guidance of a renowned sensei. The primary objective of this database is to catalog and manage the collective skills, certifications, and roles of all employees within the company. This database will serve as a powerful tool for the sensei to efficiently identify specific skills among employees, assess the skill sets associated with various roles, and pinpoint any skill gaps that might exist in the workforce.
+
+Overview of the Database:
+
+1. **Skills Table (`skills`)**: 
+   - **Purpose**: To store information about each skill or certification available or desired within the company.
+   - **Fields**: 
+     - `id` (unique identifier for each skill)
+     - `name` (name of the skill)
+     - `description` (detailed description of the skill)
+     - `tag` (a label or category for the skill)
+     - `url` (a link to more information about the skill)
+     - `time_commitment` (expected time needed to acquire the skill).
+
+2. **People Table (`people`)**: 
+   - **Purpose**: To maintain records of all employees in the company.
+   - **Fields**: 
+     - `id` (unique identifier for each employee)
+     - `first_name` and `last_name`
+     - `email`
+     - `linkedin_url` (LinkedIn profile link)
+     - `headshot_url` (link to the employee's headshot)
+     - `discord_handle` (employee's Discord username)
+     - `brief_bio` (a short biography)
+     - `date_joined` (when the employee joined the company).
+
+3. **PeopleSkills Table (`peopleskills`)**: 
+   - **Purpose**: To associate employees with their skills or certifications.
+   - **Fields**: 
+     - `id` (unique identifier for each record)
+     - `skills_id` (link to the `skills` table)
+     - `people_id` (link to the `people` table)
+     - `date_acquired` (when the employee acquired the skill).
+
+4. **Roles Table (`roles`)**: 
+   - **Purpose**: To define various roles within the company.
+   - **Fields**: 
+     - `id` (unique identifier for each role)
+     - `name` (name of the role)
+     - `sort_priority` (used for organizing roles in reports).
+
+5. **PeopleRoles Table (`people_roles`)**: 
+   - **Purpose**: To link employees to their respective roles in the company.
+   - **Fields**: 
+     - `id` (unique identifier for each record)
+     - `people_id` (link to the `people` table)
+     - `role_id` (link to the `roles` table)
+     - `date_role_acquired` (when the employee was assigned the role).
+
+Key Functionalities:
+
+- **Skill Identification**: Allows the sensei to find employees with specific skills or certifications.
+- **Skill Gap Analysis**: Helps in identifying missing skills in specific roles.
+- **Employee Skill Profiling**: Lists all the skills of an individual employee.
+- **Role-Based Skill Mapping**: Maps the skills required for each role within the company.
+- **Anticipated Skill Acquisition**: Tracks the expected date of acquiring new skills or certifications.
+
+Reporting:
+
+The database also supports the generation of HTML reports, which will include queries to extract and present data in a structured format. These reports will be instrumental in providing insights into the skill distribution, role assignments, and potential areas of improvement in terms of skill development within the company. The strict format for these reports will ensure consistency and ease of understanding for all stakeholders.
+
 ## Crows-foot diagram
 
 (add a description of the diagram and what the reader is seeing.)
+
+The provided Mermaid diagram represents a simplified Entity-Relationship Diagram (ERD) for a database involving customers, their orders, and delivery addresses.
+
+Diagram Description:
+
+1. **Entities (Tables):**
+   - **CUSTOMER**: Represents the customers of the service.
+   - **ORDER**: Represents orders placed by customers.
+   - **DELIVERY-ADDRESS**: Represents the addresses where orders are delivered.
+
+2. **Relationships:**
+   - **CUSTOMER to ORDER**: A one-to-many relationship labeled as "places". This signifies that one customer can place multiple orders (hence the crow's foot notation `{`), but each order is placed by only one customer.
+   - **CUSTOMER to DELIVERY-ADDRESS**: A many-to-many relationship, denoted by `}|..|{`. This indicates that a customer can use multiple delivery addresses, and a delivery address can be associated with multiple customers.
+
+3. **Attributes of Entities:**
+   - **CUSTOMER**: Has attributes `id` (an integer), `first_name`, and `last_name` (both strings).
+   - **DELIVERY-ADDRESS**: Has only one attribute listed, `id` (an integer).
+
+What the Reader Is Seeing:
+
+- The **CUSTOMER** table is at the center of this ERD, highlighting its importance and connections to other tables.
+- The **ORDER** table is directly related to the **CUSTOMER** table, indicating that orders are an integral part of customer activity.
+- The **DELIVERY-ADDRESS** table is connected to the **CUSTOMER** table via a many-to-many relationship, reflecting the real-world scenario where customers might have orders delivered to various addresses, and an address might be used by different customers.
+- The diagram uses standard ERD notation with lines and symbols to denote the types of relationships (one-to-many and many-to-many) and crow's foot notation to indicate the multiplicity of these relationships.
+
+This ERD provides a clear and concise visual representation of how the core entities in this database interact with each other, crucial for understanding the database structure and for any further database design or query implementation.
 
 ```{mermaid}
 %%| echo: false
@@ -116,6 +203,63 @@ erDiagram
 ## Examples of data in the database
 
 For the people, skills, and roles tables, provide a description of each table and it's contents. Then provide a listing of the entire table.
+
+Description of Tables and Their Contents
+
+1. **People Table (`people`):**
+   - **Purpose**: This table stores comprehensive details about each individual employed by the company.
+   - **Fields**:
+     - `id`: A unique identifier for each employee.
+     - `first_name`: The employee's first name.
+     - `last_name`: The employee's last name.
+     - `email`: The employee's email address.
+     - `linkedin_url`: URL to the employee's LinkedIn profile.
+     - `headshot_url`: A URL linking to the employee's headshot.
+     - `discord_handle`: The employee's Discord username.
+     - `brief_bio`: A short biography of the employee.
+     - `date_joined`: The date when the employee joined the company.
+
+2. **Skills Table (`skills`):**
+   - **Purpose**: Maintains a record of all skills and certifications relevant to the company.
+   - **Fields**:
+     - `id`: A unique identifier for each skill or certification.
+     - `name`: The name of the skill or certification.
+     - `description`: A brief description of the skill or certification.
+     - `tag`: A category or label for the skill.
+     - `url`: A URL providing more information about the skill or certification.
+     - `time_commitment`: The estimated time required to acquire the skill.
+
+3. **Roles Table (`roles`):**
+   - **Purpose**: Defines the various roles available within the company.
+   - **Fields**:
+     - `id`: A unique identifier for each role.
+     - `name`: The name of the role.
+     - `sort_priority`: A numeric value to assist in sorting and organizing roles in reports and presentations.
+
+### Listing of Entire Tables
+
+#### People Table (`people`):
+| id | first_name | last_name | email | linkedin_url | headshot_url | discord_handle | brief_bio | date_joined |
+|----|------------|-----------|-------|--------------|--------------|----------------|-----------|-------------|
+| 1  | John       | Doe       | ...   | ...          | ...          | ...            | ...       | 2021-01-01  |
+| 2  | Jane       | Smith     | ...   | ...          | ...          | ...            | ...       | 2021-02-15  |
+| ...| ...        | ...       | ...   | ...          | ...          | ...            | ...       | ...         |
+
+#### Skills Table (`skills`):
+| id | name         | description       | tag  | url       | time_commitment |
+|----|--------------|-------------------|------|-----------|-----------------|
+| 1  | Web Design   | Designing websites| IT   | ...       | 6 months        |
+| 2  | Project Mgmt | Managing projects | Mgmt | ...       | 3 months        |
+| ...| ...          | ...               | ...  | ...       | ...             |
+
+#### Roles Table (`roles`):
+| id | name         | sort_priority |
+|----|--------------|---------------|
+| 1  | Developer    | 1             |
+| 2  | Designer     | 2             |
+| ...| ...          | ...           |
+
+
 
 ### People table
 
@@ -151,6 +295,19 @@ Below is a list of data in the *skills* table.
 #| eval: true
 
 ## Add code to list roles table here
+# Assuming 'cnx' is your database connection object
+sql = "SELECT * FROM skills;"
+
+try:
+    df = pd.read_sql(sql, cnx)
+    display(df)
+except Exception as e:
+    message = str(e)
+    print(f"An error occurred:\n\n{message}\n\nIgnoring and moving on.")
+    df = pd.DataFrame()
+
+# Display the dataframe
+df
 ```
 
 ### Roles table
@@ -164,6 +321,20 @@ Below is a list of data in the *roles* table.
 #| eval: true
 
 ## Add code to list roles table here
+# Assuming 'cnx' is your database connection object
+sql = "SELECT * FROM roles;"
+
+try:
+    df = pd.read_sql(sql, cnx)
+    display(df)
+except Exception as e:
+    message = str(e)
+    print(f"An error occurred:\n\n{message}\n\nIgnoring and moving on.")
+    df = pd.DataFrame()
+
+# Display the dataframe
+df
+
 ```
 
 
@@ -200,29 +371,88 @@ df
 
 
 ### List people names and email addresses ordered by last_name
+```{python}
+sql = """
+SELECT first_name, last_name, email FROM people
+ORDER BY last_name;
+"""
 
+```
 
 ### List skill names of Person 1
+```{python}
+sql = """
+SELECT s.name FROM skills s
+JOIN peopleskills ps ON s.id = ps.skills_id
+WHERE ps.people_id = 1;
+"""
 
+```
 
 ### List people names with Skill 6
+```{python}
+sql = """
+SELECT p.first_name, p.last_name FROM people p
+JOIN peopleskills ps ON p.id = ps.people_id
+WHERE ps.skills_id = 6;
+"""
 
+```
 
 ### List people with a DEVELOPER role
+```{python}
+sql = """
+SELECT p.first_name, p.last_name FROM people p
+JOIN people_roles pr ON p.id = pr.people_id
+JOIN roles r ON pr.role_id = r.id
+WHERE r.name = 'DEVELOPER';
+"""
 
+```
 
 ### List names and email addresses of people without skills
+```{python}
+sql = """
+SELECT p.first_name, p.last_name, p.email FROM people p
+LEFT JOIN peopleskills ps ON p.id = ps.people_id
+WHERE ps.skills_id IS NULL;
+"""
 
+```
 
 ### List names and tags of unused skills
 
+```{python}
+sql = """
+SELECT p.first_name, p.last_name, p.email FROM people p
+LEFT JOIN peopleskills ps ON p.id = ps.people_id
+WHERE ps.skills_id IS NULL;
+"""
 
+```
 ### List people names and skill names with the BOSS role
 
+```{python}
+sql = """
+SELECT p.first_name, p.last_name, s.name FROM people p
+JOIN people_roles pr ON p.id = pr.people_id
+JOIN roles r ON pr.role_id = r.id
+JOIN peopleskills ps ON p.id = ps.people_id
+JOIN skills s ON ps.skills_id = s.id
+WHERE r.name = 'BOSS';
+"""
 
+```
 ### List ids and names of unused roles
 
+```{python}
+sql = """
+SELECT r.id, r.name FROM roles r
+LEFT JOIN people_roles pr ON r.id = pr.role_id
+WHERE pr.role_id IS NULL;
+"""
 
+```
 ## Reflection
 
 (Write a paragraph expressing your thoughts, feelings, and insights about your experience with this assignment.  Pause and breath before writing - I'm trying to encourage critical thinking and self-awareness while allowing you to explore the connections between theory and practice. And yes, delete this paragraph.)
