@@ -109,6 +109,11 @@ CREATE TABLE peopleskills (
 # Person 9 has skills 2,5,6;
 # Person 10 has skills 1,4,5;
 # Note that no one has yet acquired skills 7 and 8.
+
+INSERT INTO peopleskills (skills_id, people_id, date_acquired) VALUES
+(1, 1, '2021-01-01'),
+(3, 1, '2021-01-10'),
+-- Add more records as per your requirement
  
 
 # Section 8
@@ -128,11 +133,17 @@ CREATE TABLE roles (
 # Designer, Developer, Recruit, Team Lead, Boss, Mentor
 # Sort priority is assigned numerically in the order listed above (Designer=10, Developer=20, Recruit=30, etc.)
 
+INSERT INTO roles (id, name, sort_priority) VALUES
+(1, 'Designer', 10),
+(2, 'Developer', 20),
+-- Add more roles as per your requirement
 
 
 # Section 10
 # Create peopleroles( id, people_id, role_id, date_assigned )
 # None of the fields can be null.  ID can be auto_increment
+
+
 
 CREATE TABLE peopleroles (
     id int AUTO_INCREMENT,
@@ -156,4 +167,18 @@ CREATE TABLE peopleroles (
 # Person 8 is Designer and Team Lead
 # Person 9 is Developer
 # Person 10 is Developer and Designer
+
+
+INSERT INTO peopleroles (people_id, role_id, date_assigned) VALUES
+(1, 2, '2021-01-01'), -- Person 1 as Developer
+(2, 5, '2021-01-02'), -- Person 2 as Boss
+(3, 7, '2021-01-02'), -- Person 2 as Boss
+(4, 8, '2021-01-02'), -- Person 2 as Boss
+(5, 3, '2021-01-02'), -- Person 2 as Boss
+(6, 2, '2021-01-02'), -- Person 2 as Boss
+(7, 1, '2021-01-02'), -- Person 2 as Boss
+(8, 1, '2021-01-02'), -- Person 2 as Boss
+(9, 1, '2021-01-02'), -- Person 2 as Boss
+(10, 1, '2021-01-02'), -- Person 2 as Boss
+-- Add more records as per your requirement
 
